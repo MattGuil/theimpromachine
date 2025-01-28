@@ -1,0 +1,25 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.no-hover:hover,
+.no-hover:focus  {
+    background-color: inherit !important;
+    color: #007bff !important;
+    text-decoration: none;
+    box-shadow: none !important;
+}
