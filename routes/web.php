@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
@@ -17,3 +18,23 @@ Route::match(['get', 'delete'], 'logout', [AuthController::class, 'logout'])->na
 
 Route::get('home', [HomeController::class, 'index'])->name('home')->middleware('auth');
 Route::post('ajaxupload', [HomeController::class, 'upload']);
+
+Route::get('/openai', function() {
+
+    $response = Http::withToken(config('services.openai.secret'))
+        ->post('https://api.openai.com/v1/chat/completions', [
+            'model' => 'gpt-3.5-turbo',
+            'messages' => [
+                [
+                    'role' => 'system',
+                    'content' => 'You are a helpful assistant.'
+                ],
+                [
+                    'role' => 'user',
+                    'content' => 'What is the purpose of life?'
+                ]
+            ]
+        ])->json();
+
+    dd($response);
+});

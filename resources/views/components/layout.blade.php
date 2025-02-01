@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    <title>The Impro Machine</title>
-    @vite('resources/css/app.css')
-    @vite('resources/js/app.js')
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>{{ config('app.name') }}</title>
+    @vite('resources/sass/app.scss', 'resources/js/app.js')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
@@ -19,7 +17,7 @@
             <form class="ms-2" action="{{ route('auth.logout') }}" method="POST" id="logout-form">
                 @method("delete")
                 @csrf
-                <button type="submit" class="btn btn-outline-primary">Logout</button>
+                <button type="submit" class="btn btn-primary">Logout</button>
             </form>
             @endauth
         </nav>
