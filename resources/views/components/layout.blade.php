@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>{{ config('app.name') }}</title>
-    @vite('resources/sass/app.scss', 'resources/js/app.js')
+    @vite('resources/sass/app.scss')
+    @vite('resources/js/app.js')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
