@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 
+
 Route::get('/', function() {
     return redirect()->route('login');
 });
@@ -21,20 +22,45 @@ Route::post('ajaxupload', [HomeController::class, 'upload']);
 
 Route::get('/openai', function() {
 
+    $numberOfThemes = request('count', 5);
+    $prompt = "Génère une liste de $numberOfThemes thèmes pour un match d'improvisation théâtrale. Assure-toi que les thèmes sont variés et intéressants. Un thème est une phrase courte (4-5 mots maximum) et souvent abstraite. Exemple : Amour à la carte";
+    
     $response = Http::withToken(config('services.openai.secret'))
         ->post('https://api.openai.com/v1/chat/completions', [
-            'model' => 'gpt-3.5-turbo',
+            'model' => 'gpt-4o-mini',
             'messages' => [
                 [
                     'role' => 'system',
-                    'content' => 'You are a helpful assistant.'
+                    'content' => 'Tu es un assistant créatif et tu génères des idées pour des matchs d\'improvisation théâtrale.'
                 ],
                 [
                     'role' => 'user',
-                    'content' => 'What is the purpose of life?'
+                    'content' => $prompt
+                ]
+            ],
+            'response_format' => [
+                'type' => 'json_schema',
+                'json_schema' => [
+                    'name' => 'response',
+                    'strict' => true,
+                    'schema' => [
+                        'type' => 'object',
+                        'properties' => [
+                            'themes' => [
+                                'type' => 'array',
+                                'items' => [
+                                    'type' => 'string'
+                                ]
+                            ]
+                        ],
+                        "required" => [
+                            "themes"
+                        ],
+                        "additionalProperties" => false
+                    ]
                 ]
             ]
         ])->json();
-
-    dd($response);
+        
+    dd(json_decode($response['choices'][0]['message']['content']));
 });
