@@ -28,4 +28,11 @@
             }
         });
     </script>
+
+    <style>
+        form {
+            width: 50%;
+            margin: auto;
+        }
+    </style>
 </x-layout>
