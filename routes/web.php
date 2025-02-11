@@ -18,7 +18,10 @@ Route::post('login', [AuthController::class, 'login'])->name('auth.login');
 Route::match(['get', 'delete'], 'logout', [AuthController::class, 'logout'])->name('auth.logout')->middleware('auth');
 
 Route::get('home', [HomeController::class, 'index'])->name('home')->middleware('auth');
-Route::post('ajaxupload', [HomeController::class, 'upload']);
+
+Route::post('newpost', [HomeController::class, 'newPost'])->middleware('auth');
+Route::post('newgame', [HomeController::class, 'newGame'])->middleware('auth');
+Route::post('newimpro', [HomeController::class, 'newImpro'])->middleware('auth');
 
 Route::get('/openai', function() {
 
