@@ -14,6 +14,10 @@
             "dest": "/public/favicon.ico"
         },
         {
+            "src": "images/(.*)",
+            "dest": "/public/images/$1"
+        },
+        {
             "src": "/(.*)",
             "dest": "/api/index.php"
         }
