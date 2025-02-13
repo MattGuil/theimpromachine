@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Darumadrop+One&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Darumadrop One', sans-serif;
+}
+
+.btn {
+    font-family: 'Darumadrop One', sans-serif;
+}
+
+p {
+    margin: 0;
+}
+
+td {
+    vertical-align: middle;
+}
+
+.no-hover:hover,
+.no-hover:focus  {
+    background-color: inherit !important;
+    color: gray !important;
+    text-decoration: none;
+    box-shadow: none !important;
+}

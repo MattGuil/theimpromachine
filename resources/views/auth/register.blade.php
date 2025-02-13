@@ -11,7 +11,7 @@
             <input class="form-control mb-4" placeholder="Confirm password" type="password" name="password_confirmation" required>
 
             <button type="submit" class="btn btn-primary mt-4 w-100">Register</button>
-            <a href="{{ route('login') }}" class="btn btn-outline-primary no-hover mt-2 w-100">Log in</a>
+            <a href="{{ route('login') }}" class="btn btn-outline-secondary no-hover mt-2 w-100">Log in</a>
         
             @if ($errors->any())
                 @foreach ($errors->all() as $error)
@@ -34,20 +34,3 @@
         });
     });
 </script>
-
-<style>
-    #register-container {
-        width: 100%;
-        margin: auto;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    @media (min-width: 800px) {
-        #register-container {
-            width: 50%;
-        }
-    }
-</style>

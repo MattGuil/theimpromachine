@@ -2,8 +2,11 @@
 
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
+
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\GameController;
+use App\Http\Controllers\ImproController;
 
 
 Route::get('/', function() {
@@ -19,9 +22,12 @@ Route::match(['get', 'delete'], 'logout', [AuthController::class, 'logout'])->na
 
 Route::get('home', [HomeController::class, 'index'])->name('home')->middleware('auth');
 
-Route::post('newpost', [HomeController::class, 'newPost'])->middleware('auth');
-Route::post('newgame', [HomeController::class, 'newGame'])->middleware('auth');
-Route::post('newimpro', [HomeController::class, 'newImpro'])->middleware('auth');
+Route::post('creategame', [GameController::class, 'createGame'])->middleware('auth');
+Route::delete('deletegame/{id}', [GameController::class, 'deleteGame'])->middleware('auth');
+
+Route::post('createimpro', [ImproController::class, 'createImpro'])->middleware('auth');
+Route::delete('deleteimpro/{id}', [ImproController::class, 'deleteImpro'])->middleware('auth');
+
 
 Route::get('/openai', function() {
 

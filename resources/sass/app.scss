@@ -1,18 +1,25 @@
+@use 'base/reset';
+@use 'layout/header';
+@use 'pages/home';
+@use 'pages/login';
+@use 'pages/register';
+
 @import 'bootswatch/dist/litera/bootstrap.min.css';
+@import url('https://fonts.googleapis.com/css2?family=Darumadrop+One&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
+@media (min-width: 800px) {
+    body {
+        width: 75%;
+        margin: auto;
+    }
+
+    header {
+        margin-top: 20px;
+    }
 }
 
-body {
-    padding: 0 20px;
-}
-
-.no-hover:hover,
-.no-hover:focus  {
-    background-color: inherit !important;
-    color: #007bff !important;
-    text-decoration: none;
-    box-shadow: none !important;
+@media (max-width: 800px) {
+    h1 {
+        font-size: 1rem;
+    }
 }

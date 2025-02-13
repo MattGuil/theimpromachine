@@ -10,6 +10,7 @@ class Game extends Model
     use HasFactory;
 
     protected $fillable = [
+        'arbitre',
         'equipe_1',
         'equipe_2',
         'equipe_1_score',

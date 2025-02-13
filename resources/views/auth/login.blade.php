@@ -11,7 +11,7 @@
             <input class="form-control mt-4" placeholder="Password" type="password" name="password" required>
             
             <button type="submit" class="btn btn-primary mt-4 w-100">Log in</button>
-            <a href="{{ route('register') }}" class="btn btn-outline-primary no-hover mt-2 w-100">Register</a>
+            <a href="{{ route('register') }}" class="btn btn-outline-secondary no-hover mt-2 w-100">Register</a>
         
             @error("message")
             <p id="alert-message" class="alert alert-danger fixed-bottom mx-4">
@@ -32,20 +32,3 @@
         }
     });
 </script>
-
-<style>
-    #login-container {
-        width: 100%;
-        margin: auto;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    @media (min-width: 800px) {
-        #login-container {
-            width: 50%;
-        }
-    }
-</style>
