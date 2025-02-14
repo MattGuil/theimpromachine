@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AppController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\ImproController;
 
@@ -20,13 +20,16 @@ Route::post('register', [AuthController::class, 'register'])->name('auth.registe
 Route::post('login', [AuthController::class, 'login'])->name('auth.login');
 Route::match(['get', 'delete'], 'logout', [AuthController::class, 'logout'])->name('auth.logout')->middleware('auth');
 
-Route::get('home', [HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::get('home', [AppController::class, 'index'])->name('home')->middleware('auth');
+Route::get('game/{i}', [AppController::class, 'game'])->name('game')->middleware('auth');
+Route::get('play/{i}', [AppController::class, 'play'])->name('play')->middleware('auth');
 
 Route::post('creategame', [GameController::class, 'createGame'])->middleware('auth');
 Route::delete('deletegame/{id}', [GameController::class, 'deleteGame'])->middleware('auth');
 
 Route::post('createimpro', [ImproController::class, 'createImpro'])->middleware('auth');
 Route::delete('deleteimpro/{id}', [ImproController::class, 'deleteImpro'])->middleware('auth');
+Route::post('updateimprosorder', [ImproController::class, 'updateImprosOrder'])->middleware('auth');
 
 
 Route::get('/openai', function() {

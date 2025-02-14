@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('impros', function (Blueprint $table) {
             $table->id();
             $table->foreignId('game_id')->index();
+            $table->integer('position')->default(1000);
             $table->enum('type', ['Mixte', 'Comparée']);
             $table->integer('nb_joueur'); // -1 => nombre de joueurs illimité
             $table->integer('duree');

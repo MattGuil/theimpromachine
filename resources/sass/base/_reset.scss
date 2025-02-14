@@ -9,14 +9,41 @@
 
 .btn {
     font-family: 'Darumadrop One', sans-serif;
+    border: none !important;
+}
+
+.btn-info {
+    background-color: #86ade3 !important;
+}
+
+.btn-danger {
+    background-color: #ee6772 !important;
 }
 
 p {
     margin: 0;
 }
 
+table i.material-icons {
+    font-size: 1rem;
+}
+
+tr {
+    transition: transform 0.5s;
+    cursor: pointer;
+}
+
 td {
     vertical-align: middle;
+}
+
+tr:nth-child(even) td {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    transform: rotate(0.5deg);
+    box-shadow: 2px 2px lightgray;
 }
 
 .no-hover:hover,

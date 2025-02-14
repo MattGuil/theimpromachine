@@ -11,6 +11,7 @@ class ImproController
         try {
             $validatedData = $request->validate([
                 'game_id' => 'required|integer|exists:games,id',
+                'position' => 'required|integer',
                 'type' => 'required|in:Mixte,Comparée',
                 'nb_joueur' => 'required|integer',
                 'duree' => 'required|integer',
@@ -72,4 +73,16 @@ class ImproController
         }
     }
 
+    public function getImprosByGame($gameId) {
+        return Impro::where('game_id', $gameId)->orderBy('position', 'asc')->get();
+    }
+
+    public function updateImprosOrder(Request $request) {
+        $order = $request->input('order');
+        foreach ($order as $item) {
+            Impro::where('id', $item['id'])->update(['position' => $item['position']]);
+        }
+
+        return response()->json(['status' => 'success']);
+    }
 }

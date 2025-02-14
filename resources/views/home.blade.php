@@ -4,24 +4,23 @@
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">Versus</th>
-                <th scope="col">Date de création</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
             </thead>
             <tbody id="games-table-body">
             @foreach ($games as $game)
-                <tr id="game-{{ $game->id }}">
+                <tr id="game-{{ $game->id }}" class="game-row" data-id="{{ $game->id }}">
                     <td>{{ $game->equipe_1 }} / {{ $game->equipe_2 }}</td>
                     <td>{{ $game->created_at->format('d/m/Y') }}</td>
-                    <td>
-                        <form class="delete-game-form" data-id="{{ $game->id }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">
-                                <i class="material-icons">delete</i>
-                            </button>
-                        </form>
+                    <td class="align-middle">
+                        <button class="btn btn-info btn-sm view-game" data-id="{{ $game->id }}">
+                            <i class="material-icons">visibility</i>
+                        </button>
+                        <button class="btn btn-danger btn-sm delete-game" data-id="{{ $game->id }}">
+                            <i class="material-icons">delete</i>
+                        </button>
                     </td>
                 </tr>
             @endforeach
@@ -32,7 +31,6 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        /*
         $.ajax({
             url: '{{ url("creategame") }}',
             method: 'POST',
@@ -49,17 +47,16 @@
             success: function(response) {
                 console.log(response);
                 var newRow = `
-                    <tr id="game-${response.game.id}">
+                    <tr id="game-${response.game.id}" class="game-row" data-id="${response.game.id}">
                         <td>${response.game.equipe_1} / ${response.game.equipe_2}</td>
                         <td>${new Date(response.game.created_at).toLocaleDateString()}</td>
-                        <td>
-                            <form class="delete-game-form" data-id="${response.game.id}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">
-                                    <i class="material-icons">delete</i>
-                                </button>
-                            </form>
+                        <td class="align-middle">
+                            <button class="btn btn-info btn-sm view-game" data-id="${response.game.id}">
+                                <i class="material-icons">visibility</i>
+                            </button>
+                            <button class="btn btn-danger btn-sm delete-game" data-id="${response.game.id}">
+                                <i class="material-icons">delete</i>
+                            </button>
                         </td>
                     </tr>
                 `;
@@ -70,12 +67,20 @@
                 console.log(xhr.responseText);
             }
         });
-        */
 
-        $(document).on('submit', '.delete-game-form', function(event) {
-            event.preventDefault();
-            var form = $(this);
-            var gameId = form.data('id');
+        $(document).on('click', '.view-game', function() {
+            var gameId = $(this).data('id');
+            window.location.href = '{{ url("game") }}/' + gameId;
+        });
+
+        $(document).on('click', '.game-row', function() {
+            var gameId = $(this).data('id');
+            window.location.href = '{{ url("game") }}/' + gameId;
+        });
+
+        $(document).on('click', '.delete-game', function(event) {
+            event.stopPropagation();
+            var gameId = $(this).data('id');
 
             if (confirm('Êtes-vous sûr de vouloir supprimer ce match ?')) {
                 $.ajax({

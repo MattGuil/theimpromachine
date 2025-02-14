@@ -11,6 +11,7 @@ class Impro extends Model
 
     protected $fillable = [
         'game_id',
+        'position',
         'type',
         'nb_joueur',
         'duree',

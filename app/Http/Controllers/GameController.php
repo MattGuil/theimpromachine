@@ -75,4 +75,8 @@ class GameController
     public function getGamesByArbitre($arbitre) {
         return Game::where('arbitre', $arbitre)->get();
     }
+
+    public function getGame($gameId, $userId) {
+        return Game::where('id', $gameId)->where('arbitre', $userId)->first();
+    }
 }
