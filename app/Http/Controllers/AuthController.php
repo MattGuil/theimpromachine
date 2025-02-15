@@ -39,7 +39,7 @@ class AuthController
         }
 
         return to_route('login')->withErrors([
-            'message' => 'Authentication failed',
+            'message' => 'Les identifiants renseignés sont incorrects.',
         ])->onlyInput('email');
     }
 
