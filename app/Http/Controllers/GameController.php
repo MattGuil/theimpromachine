@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Game;
+use App\Models\Impro;
 use Illuminate\Http\Request;
 
 class GameController
@@ -56,11 +57,14 @@ class GameController
     public function deleteGame($id) {
         try {
             $game = Game::findOrFail($id);
+            $gameDeleted = $game;
+            Impro::where('game_id', $id)->delete();
             $game->delete();
 
             return response()->json([
                 'status' => 200,
-                'message' => 'Game deleted successfully',
+                'message' => 'Game and associated impros deleted successfully',
+                'game' => $gameDeleted,
             ], 200);
 
         } catch (\Exception $e) {

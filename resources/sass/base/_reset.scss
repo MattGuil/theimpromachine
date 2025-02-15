@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Darumadrop+One&display=swap');
 
 * {
@@ -9,7 +10,22 @@
 
 .btn {
     font-family: 'Darumadrop One', sans-serif;
+}
+
+tr .btn {
+    opacity: .75;
+}
+
+tr .btn:hover {
+    opacity: 1;
+}
+
+.btn-success, .btn-info, .btn-danger {
     border: none !important;
+}
+
+.btn-success {
+    background-color: #5bc7a1 !important;
 }
 
 .btn-info {
@@ -20,12 +36,23 @@
     background-color: #ee6772 !important;
 }
 
-p {
-    margin: 0;
+.btn-light {
+    border: none !important;
+}
+
+.btn-light:hover {
+    border: none !important;
+    background-color: #333 !important;
+    color: white !important;
+}
+
+.modal-header, .modal-body, .modal-footer {
+    border: none;
+    padding: 12px;
 }
 
 table i.material-icons {
-    font-size: 1rem;
+    font-size: .8rem;
 }
 
 tr {
@@ -52,4 +79,8 @@ tr:hover {
     color: gray !important;
     text-decoration: none;
     box-shadow: none !important;
+}
+
+.alert {
+    font-family: 'Darumadrop One', sans-serif;
 }

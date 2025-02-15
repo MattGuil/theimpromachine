@@ -14,9 +14,9 @@
             <a href="{{ route('register') }}" class="btn btn-outline-secondary no-hover mt-2 w-100">Register</a>
         
             @error("message")
-            <p id="alert-message" class="alert alert-danger fixed-bottom mx-4">
+            <div id="alert-message" class="alert alert-danger fixed-bottom mx-4">
                 {{ $message }}
-            </p>
+            </div>
             @enderror
         </form>
     </div>

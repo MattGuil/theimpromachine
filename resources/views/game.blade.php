@@ -1,8 +1,8 @@
 <x-layout>
     <div id="game-container">
         <h2>{{ $game->equipe_1 }} / {{ $game->equipe_2 }}</h2>
-        <table class="table">
-            <thead>
+        <table class="table mt-4">
+            <thead class="opacity-50">
                 <tr>
                     <th scope="col">Id</th>
                     <th scope="col">Type</th>
@@ -27,7 +27,10 @@
                 @endforeach
             </tbody>
         </table>
-        <button id="save-order" class="btn btn-primary">Enregistrer les modifications</button>
+        <div class="d-flex justify-content-between gap-2 mt-4">
+            <button id="save-order" class="btn btn-primary w-50">Enregistrer</button>
+            <button id="play-game" class="btn btn-success w-50">Jouer</button>
+        </div>
     </div>
 </x-layout>
 
@@ -100,6 +103,10 @@
                     console.log(xhr.responseText);
                 }
             });
+        });
+
+        $('#play-game').click(function() {
+            window.location.href = '{{ url("play") }}/' + {{ $game->id }};
         });
     });
 </script>

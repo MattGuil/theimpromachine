@@ -1,11 +1,18 @@
 @use 'base/reset';
-@use 'layout/header';
-@use 'pages/home';
 @use 'pages/login';
 @use 'pages/register';
+@use 'layout/header';
+@use 'pages/home';
+@use 'pages/game';
+@use 'pages/play';
+@use 'layout/footer';
 
 @import 'bootswatch/dist/litera/bootstrap.min.css';
-@import url('https://fonts.googleapis.com/css2?family=Darumadrop+One&display=swap');
+
+body {
+    min-height: 100vh;
+    position: relative;
+}
 
 @media (min-width: 800px) {
     body {

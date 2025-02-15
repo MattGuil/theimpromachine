@@ -1,15 +1,10 @@
-#home-container {
+#game-container {
     padding-top: 15vh;
     padding-bottom: 10vh;
 }
 
-.modal-footer {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-}
-
 @media (max-width: 800px) {
-    #home-container {
+    #game-container {
         padding: 15vh 20px 10vh 20px;
     }
 }
