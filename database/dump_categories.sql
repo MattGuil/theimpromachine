@@ -9,6 +9,7 @@ CREATE OR REPLACE TABLE categories (
 
 INSERT INTO categories (nom, type, description, mixte, comparee)
 VALUES
+('Libre', 'Aucun', '', FALSE, FALSE),
 ('À la manière de Molière', 'Catégorie de style', 'Style inspiré des œuvres de Molière.', FALSE, FALSE),
 ('À la manière de Marcel Pagnol', 'Catégorie de style', 'Style inspiré des œuvres de Marcel Pagnol.', FALSE, FALSE),
 ('À la manière de William Shakespeare', 'Catégorie de style', 'Style inspiré des œuvres de Shakespeare.', FALSE, FALSE),

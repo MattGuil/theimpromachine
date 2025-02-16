@@ -5,37 +5,94 @@ namespace App\Http\Controllers;
 use App\Models\Game;
 use App\Models\Impro;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class GameController
 {
-    public function createGame(Request $request) {
+    public function generateGame(Request $request) {
         try {
             $validatedData = $request->validate([
                 'arbitre' => 'required|string|max:25',
                 'equipe_1' => 'required|string|max:255',
                 'equipe_2' => 'required|string|max:255',
-                'equipe_1_score' => 'nullable|integer',
-                'equipe_2_score' => 'nullable|integer',
-                'statut' => 'required|in:Créée,En cours,Terminée',
-                'vainqueur' => 'nullable|string|max:255',
+                'nb_joueurs' => 'required|integer|min:4|max:20',
+                'nb_impros' => 'required|integer|min:5|max:15',
             ]);
 
-            $data = new Game([
+            $game = new Game([
                 'arbitre' => $validatedData['arbitre'],
                 'equipe_1' => $validatedData['equipe_1'],
                 'equipe_2' => $validatedData['equipe_2'],
-                'equipe_1_score' => $validatedData['equipe_1_score'],
-                'equipe_2_score' => $validatedData['equipe_2_score'],
-                'statut' => $validatedData['statut'],
-                'vainqueur' => $validatedData['vainqueur'],
+                'equipe_1_score' => 0,
+                'equipe_2_score' => 0,
+                'vainqueur' => null,
             ]);
 
-            $data->save();
+            $game->save();
+
+            $numberOfThemes = $validatedData['nb_impros'];
+            $prompt = "Génère une liste de $numberOfThemes thèmes pour un match d'improvisation théâtrale. Assure-toi que les thèmes sont variés et intéressants. Un thème est une phrase courte (4-5 mots maximum) et souvent abstraite.";
+            $numberOfThemes = (int) $numberOfThemes;
+
+            // Appel à l'API OpenAI pour générer les thèmes
+            $response = Http::withToken(config('services.openai.secret'))
+                ->post('https://api.openai.com/v1/chat/completions', [
+                    'model' => 'gpt-4o-mini',
+                    'messages' => [
+                        [
+                            'role' => 'system',
+                            'content' => 'Tu es un assistant créatif et tu génères des idées pour des matchs d\'improvisation théâtrale.'
+                        ],
+                        [
+                            'role' => 'user',
+                            'content' => $prompt
+                        ]
+                    ],
+                    'response_format' => [
+                        'type' => 'json_schema',
+                        'json_schema' => [
+                            'name' => 'response',
+                            'strict' => true,
+                            'schema' => [
+                                'type' => 'object',
+                                'properties' => [
+                                    'themes' => [
+                                        'type' => 'array',
+                                        'items' => [
+                                            'type' => 'string'
+                                        ]
+                                    ]
+                                ],
+                                "required" => [
+                                    "themes"
+                                ],
+                                "additionalProperties" => false
+                            ]
+                        ]
+                    ]
+                ])->json();
+
+            // Extraire les thèmes générés de la réponse
+            $themes = json_decode($response['choices'][0]['message']['content'], true)['themes'];
+
+            // Si la réponse est valide, continuer à créer les impros
+            if ($themes && is_array($themes) && count($themes) >= $numberOfThemes) {
+                // Créer les impros avec les thèmes générés
+                for ($i = 0; $i < $numberOfThemes; $i++) {
+                    app(ImproController::class)->generateImpro(
+                        $game->id,
+                        $i + 1,
+                        $validatedData['nb_joueurs'],
+                        $validatedData['nb_impros'],
+                        $themes[$i] // Utiliser le thème généré pour chaque impro
+                    );
+                }
+            }
 
             return response()->json([
                 'status' => 200,
-                'message' => 'Game created successfully',
-                'game' => $data,
+                'message' => 'Game and impros created successfully',
+                'game' => $game,
             ], 200);
 
         } catch (\Illuminate\Validation\ValidationException $e) {

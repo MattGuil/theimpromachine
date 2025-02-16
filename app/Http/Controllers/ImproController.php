@@ -3,55 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Models\Impro;
+use App\Models\Categorie;
 use Illuminate\Http\Request;
 
 class ImproController
 {
-    public function createImpro(Request $request) {
-        try {
-            $validatedData = $request->validate([
-                'game_id' => 'required|integer|exists:games,id',
-                'position' => 'required|integer',
-                'type' => 'required|in:Mixte,Comparée',
-                'nb_joueur' => 'required|integer',
-                'duree' => 'required|integer',
-                'categorie_id' => 'required|integer|exists:categories,id',
-                'theme' => 'required|string|max:255',
-                'statut' => 'required|in:Créée,En cours,Jouée',
-            ]);
+    public function generateImpro($game_id, $position, $nb_joueurs, $nb_impros, $theme) {
+        $type = (rand(1, 4) <= 3) ? 'Mixte' : 'Comparée';
+        $nb_joueur = (rand(1, 10) <= 8) ? -1 : rand(2, $nb_joueurs - 1);
+        $duree = (rand(1, 10) <= 8) ? rand(2, 7) : rand(1, 15);
+        $categorie_id = (rand(1, 10) <= 8) ? 1 : Categorie::where('id', '!=', 1)->inRandomOrder()->first()->id;
 
-            $data = new Impro([
-                'game_id' => $validatedData['game_id'],
-                'type' => $validatedData['type'],
-                'nb_joueur' => $validatedData['nb_joueur'],
-                'duree' => $validatedData['duree'],
-                'categorie_id' => $validatedData['categorie_id'],
-                'theme' => $validatedData['theme'],
-                'statut' => $validatedData['statut']
-            ]);
+        $impro = new Impro([
+            'game_id' => $game_id,
+            'position' => $position,
+            'type' => $type,
+            'nb_joueur' => $nb_joueur,
+            'duree' => $duree,
+            'categorie_id' => $categorie_id,
+            'theme' => $theme,
+            'statut' => 'Créée'
+        ]);
 
-            $data->save();
-
-            return response()->json([
-                'status' => 200,
-                'message' => 'Impro created successfully',
-                'impro' => $data,
-            ], 200);
-
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json([
-                'status' => 422,
-                'message' => 'Validation error',
-                'errors' => $e->errors(),
-            ], 422);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 500,
-                'message' => 'An error occurred while creating the impro',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
+        $impro->save();
     }
 
     public function deleteImpro($id) {

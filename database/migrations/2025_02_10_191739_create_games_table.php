@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('equipe_2');
             $table->integer('equipe_1_score')->nullable();
             $table->integer('equipe_2_score')->nullable();
-            $table->enum('statut', ['Créée', 'En cours', 'Terminée'])->default('Créée');
+            $table->enum('statut', ['Créé', 'En cours', 'Terminé'])->default('Créé');
             $table->string('vainqueur')->nullable();
             $table->timestamps();
         });

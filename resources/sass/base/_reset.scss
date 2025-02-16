@@ -20,19 +20,19 @@ tr .btn:hover {
     opacity: 1;
 }
 
-.btn-success, .btn-info, .btn-danger {
+.btn-primary, .btn-success, .btn-info, .btn-danger {
     border: none !important;
 }
 
-.btn-success {
+.btn-success, .alert-success {
     background-color: #5bc7a1 !important;
 }
 
-.btn-info {
+.btn-primary, .btn-info, .alert-info {
     background-color: #86ade3 !important;
 }
 
-.btn-danger {
+.btn-danger, .alert-danger {
     background-color: #ee6772 !important;
 }
 

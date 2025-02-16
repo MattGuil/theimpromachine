@@ -20,8 +20,10 @@
                 <tbody id="games-table-body">
                 @foreach ($games as $game)
                     <tr id="game-{{ $game->id }}" class="game-row" data-id="{{ $game->id }}">
+                        <td class="date">
+                            <span>{{ $game->created_at->format('d/m/Y') }}</span>
+                        </td>
                         <td>{{ $game->equipe_1 }} / {{ $game->equipe_2 }}</td>
-                        <td>{{ $game->created_at->format('d/m/Y') }}</td>
                         <td class="text-end">
                             <button class="btn btn-success btn-sm play-game" data-id="{{ $game->id }}">
                                 <i class="material-icons">play_arrow</i>
@@ -29,7 +31,7 @@
                             <button class="btn btn-info btn-sm view-game" data-id="{{ $game->id }}">
                                 <i class="material-icons">visibility</i>
                             </button>
-                            <button class="btn btn-danger btn-sm delete-game" data-id="{{ $game->id }}" data-name="{{ $game->equipe_1 }} / {{ $game->equipe_2 }}">
+                            <button class="btn btn-danger btn-sm delete-game" data-id="{{ $game->id }}" data-name="{{ $game->equipe_1 }}/{{ $game->equipe_2 }}">
                                 <i class="material-icons">delete</i>
                             </button>
                         </td>
@@ -54,11 +56,42 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="newGameModal" tabindex="-1" role="dialog" aria-labelledby="newGameModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newGameModalLabel">Générer un nouveau match</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="newGameForm">
+                        <div class="d-flex justify-content-between gap-2">
+                            <input type="text" placeholder="Nom de l'équipe 1" class="form-control" id="equipe_1" required>
+                            <span class="d-flex align-items-center">VS.</span>
+                            <input type="text" placeholder="Nom de l'équipe 2" class="form-control" id="equipe_2" required>
+                        </div>
+                        <br>
+                        <label for="nb_joueurs">Nombre de joueurs par équipe</label>
+                        <input type="number" class="form-control" id="nb_joueurs" min="2" max="10" value="7" required>
+                        <br>
+                        <label for="nb_joueurs">Nombre d'impros</label>
+                        <input type="number" class="form-control" id="nb_impros" min="5" max="15" value="10" required>
+                        <button type="submit" class="btn btn-primary w-100 mt-4">Générer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </x-layout>
 
 <script type="text/javascript">
     $(document).ready(function() {
         var gameIdToDelete;
+
+        $(document).on('click', '#newGameBtn', function(event) {
+            event.stopPropagation();
+            $('#newGameModal').modal('show');
+        });
 
         $(document).on('click', '.play-game', function(event) {
             event.stopPropagation();
@@ -96,6 +129,7 @@
                 },
                 success: function(response) {
                     console.log(response);
+
                     $('#game-' + gameIdToDelete).remove();
                     $('#deleteModal').modal('hide');
                     if ($('#games-table-body').children().length === 0) {
@@ -122,22 +156,19 @@
             $('#deleteModal').modal('hide');
         });
 
-        $('#newGameBtn').click(function() {
-            var equipe_1 = prompt("Nom de l'équipe 1:");
-            var equipe_2 = prompt("Nom de l'équipe 2:");
-            if (equipe_1 && equipe_2) {
+        $('#newGameForm').submit(function(event) {
+            event.preventDefault();
+            if (equipe_1 && equipe_2 && nb_joueurs && nb_impros) {
                 $.ajax({
-                    url: '{{ url("creategame") }}',
+                    url: '{{ url("generategame") }}',
                     method: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}',
                         arbitre: '{{ Auth::user()->name }}',
-                        equipe_1: equipe_1,
-                        equipe_2: equipe_2,
-                        equipe_1_score: null,
-                        equipe_2_score: null,
-                        statut: 'Créée',
-                        vainqueur: null
+                        equipe_1: $('#equipe_1').val(),
+                        equipe_2: $('#equipe_2').val(),
+                        nb_joueurs: $('#nb_joueurs').val() * 2,
+                        nb_impros: $('#nb_impros').val(),
                     },
                     success: function(response) {
                         console.log(response);
@@ -184,6 +215,7 @@
                         setTimeout(() => {
                             $('#alert-game-created').fadeOut();
                         }, 3000);
+                        $('#newGameModal').modal('hide');
                     },
                     error: function(xhr, status, error) {
                         alert('Error: ' + error);

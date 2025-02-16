@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('game_id')->index();
             $table->integer('position')->default(1000);
             $table->enum('type', ['Mixte', 'Comparée']);
-            $table->integer('nb_joueur'); // -1 => nombre de joueurs illimité
+            $table->integer('nb_joueurs'); // -1 => nombre de joueurs illimité
             $table->integer('duree');
             $table->foreignId('categorie_id')->index();
             $table->string('theme');
