@@ -174,8 +174,10 @@
                         console.log(response);
                         var newRow = `
                             <tr id="game-${response.game.id}" class="game-row" data-id="${response.game.id}">
+                                <td class="date">
+                                    <span>${new Date(response.game.created_at).toLocaleDateString()}</span>
+                                </td>
                                 <td>${response.game.equipe_1} / ${response.game.equipe_2}</td>
-                                <td>${new Date(response.game.created_at).toLocaleDateString()}</td>
                                 <td class="text-end">
                                     <button class="btn btn-success btn-sm play-game" data-id="${response.game.id}">
                                         <i class="material-icons">play_arrow</i>
@@ -215,6 +217,8 @@
                         setTimeout(() => {
                             $('#alert-game-created').fadeOut();
                         }, 3000);
+
+                        $('#newGameForm')[0].reset();
                         $('#newGameModal').modal('hide');
                     },
                     error: function(xhr, status, error) {
