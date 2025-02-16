@@ -1,0 +1,30 @@
+#help-container {
+    padding-top: 15vh;
+    padding-bottom: 10vh;
+
+    h2 {
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-family: 'Coming Soon', serif !important;
+    }
+
+    .small-heading {
+        font-size: 1rem;
+    }
+    
+    .small-paragraph {
+        font-size: .9rem;
+    }
+    
+    table h3 {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 800px) {
+    #help-container {
+        padding: 15vh 20px 10vh 20px;
+    }
+}

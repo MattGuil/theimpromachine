@@ -14,15 +14,18 @@
     @if (!request()->routeIs('login') && !request()->routeIs('register'))
     <header class="fixed-top">
         <nav>
-            <div>
+            <div class="logo-container" style="cursor: pointer;">
                 <img src="{{ asset('images/theatre.png') }}" alt="The Impro Machine Logo">
                 <h1>The Impro Machine</h1>
             </div>
-            <form class="ms-2" action="{{ route('auth.logout') }}" method="POST" id="logout-form">
-                @method("delete")
-                @csrf
-                <button type="submit" class="btn" click="{{ route('auth.logout') }}">{{ \Illuminate\Support\Facades\Auth::user()->name }} <i class="material-icons">logout</i></button>
-            </form>
+            <div class="ms-2">
+                <a href="{{ route('help') }}" class="btn btn-outline-secondary">Aide</a>
+                <form action="{{ route('auth.logout') }}" method="POST" id="logout-form" class="d-inline">
+                    @method("delete")
+                    @csrf
+                    <button type="submit" class="btn">{{ \Illuminate\Support\Facades\Auth::user()->name }} <i class="material-icons">logout</i></button>
+                </form>
+            </div>
         </nav>
     </header>
     @endif
@@ -41,5 +44,11 @@
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    <script>
+        document.querySelector('.logo-container').addEventListener('click', function() {
+            window.location.href = '{{ route('home') }}';
+        });
+    </script>
 </body>
 </html>

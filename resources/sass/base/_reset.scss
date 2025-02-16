@@ -1,10 +1,13 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Darumadrop+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Coming+Soon&family=Darumadrop+One&display=swap');
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Darumadrop One', sans-serif;
+}
+
+p {
     font-family: 'Darumadrop One', sans-serif;
 }
 
@@ -83,4 +86,15 @@ tr:hover {
 
 .alert {
     font-family: 'Darumadrop One', sans-serif;
+}
+
+.accordion-button.no-hover {
+    background-color: inherit !important;
+    color: inherit !important;
+    text-decoration: none !important;
+    box-shadow: none !important;
+}
+
+.left-aligned-tooltip .tooltip-inner {
+    text-align: left;
 }

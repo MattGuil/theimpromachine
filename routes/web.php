@@ -21,6 +21,7 @@ Route::match(['get', 'delete'], 'logout', [AuthController::class, 'logout'])->na
 Route::get('home', [AppController::class, 'index'])->name('home')->middleware('auth');
 Route::get('game/{i}', [AppController::class, 'game'])->name('game')->middleware('auth');
 Route::get('play/{i}', [AppController::class, 'play'])->name('play')->middleware('auth');
+Route::get('help', [AppController::class, 'help'])->name('help')->middleware('auth');
 
 Route::post('generategame', [GameController::class, 'generateGame'])->middleware('auth');
 Route::delete('deletegame/{id}', [GameController::class, 'deleteGame'])->middleware('auth');

@@ -19,7 +19,12 @@
                         <td>{{ $impro->type }}</td>
                         <td>{{ $impro->nb_joueur == -1 ? 'Illimité' : $impro->nb_joueur }}</td>
                         <td>{{ $impro->duree }} min</td>
-                        <td>{{ $impro->categorie->nom }}</td>
+                        <td>
+                            {{ $impro->categorie->nom }}
+                            @if ($impro->categorie->description != '')
+                                <i class="material-icons opacity-50" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $impro->categorie->description }}">info</i>
+                            @endif
+                        </td>
                         <td>{{ $impro->theme }}</td>
                     </tr>
                 @endforeach
@@ -76,6 +81,11 @@
 
         $('#play-game').click(function() {
             window.location.href = '{{ url("play") }}/' + {{ $game->id }};
+        });
+
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
         });
     });
 </script>

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Game;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -43,5 +42,13 @@ class AppController
         } else {
             return redirect()->back()->with('error', 'Vous n\'êtes pas autorisé à accéder à ce match.');
         }
+    }
+
+    public function help() {
+        $categories = app(CategorieController::class)->getCategoriesByType();
+
+        return view('help', [
+            'categories' => $categories,
+        ]);
     }
 }
