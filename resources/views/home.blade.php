@@ -76,7 +76,7 @@
                         <br>
                         <label for="nb_joueurs">Nombre d'impros</label>
                         <input type="number" class="form-control" id="nb_impros" min="5" max="15" value="10" required>
-                        <button type="submit" class="btn btn-primary w-100 mt-4">Générer</button>
+                        <button type="submit" class="btn btn-primary w-100 mt-4" id="generateBtn">Générer</button>
                     </form>
                 </div>
             </div>
@@ -158,6 +158,11 @@
 
         $('#newGameForm').submit(function(event) {
             event.preventDefault();
+            var generateBtn = $('#generateBtn');
+            console.log(generateBtn);
+            generateBtn.html('<span class="spinner-border spinner-border-sm" aria-hidden="true"></span><span class="visually-hidden" role="status">Loading...</span>  ');
+            generateBtn.prop('disabled', true);
+
             if (equipe_1 && equipe_2 && nb_joueurs && nb_impros) {
                 $.ajax({
                     url: '{{ url("generategame") }}',
@@ -220,10 +225,14 @@
 
                         $('#newGameForm')[0].reset();
                         $('#newGameModal').modal('hide');
+                        generateBtn.html('Générer');
+                        generateBtn.prop('disabled', false);
                     },
                     error: function(xhr, status, error) {
                         alert('Error: ' + error);
                         console.log(xhr.responseText);
+                        generateBtn.html('Générer');
+                        generateBtn.prop('disabled', false);
                     }
                 });
             }
