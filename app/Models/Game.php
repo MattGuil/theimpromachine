@@ -9,12 +9,15 @@ class Game extends Model
 {
     use HasFactory;
 
+    /**
+     * Les attributs qui peuvent être assignés en masse.
+     *
+     * @var array<string>
+     */
     protected $fillable = [
         'arbitre',
         'equipe_1',
         'equipe_2',
-        'equipe_1_score',
-        'equipe_2_score',
         'vainqueur'
     ];
 }

@@ -2,6 +2,7 @@
     <div id="home-container">
         <div class="d-flex align-items-center mb-3">
             <h2>Vos matchs</h2>
+            <!-- Bouton pour créer un nouveau match -->
             <button id="newGameBtn" class="btn btn-light d-flex align-items-center ms-3">
                 <i class="material-icons" style="font-size: 1.5rem;">add</i>
             </button>
@@ -18,6 +19,7 @@
                 </tr>
                 </thead>
                 <tbody id="games-table-body">
+                <!-- Matchs arbitrés par l'utilisateur connecté -->
                 @foreach ($games as $game)
                     <tr id="game-{{ $game->id }}" class="game-row" data-id="{{ $game->id }}">
                         <td class="date">
@@ -39,6 +41,7 @@
                             </span>
                         </td>
                         <td class="text-end">
+                            <!-- Boutons pour jouer, voir ou supprimer un match -->
                             <button class="btn btn-success btn-sm play-game" data-id="{{ $game->id }}">
                                 <i class="material-icons">play_arrow</i>
                             </button>
@@ -56,6 +59,7 @@
         @endif
     </div>
 
+    <!-- Modal de confirmation de suppression d'un match -->
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -71,6 +75,7 @@
         </div>
     </div>
 
+    <!-- Modal pour créer un nouveau match -->
     <div class="modal fade" id="newGameModal" tabindex="-1" role="dialog" aria-labelledby="newGameModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -102,29 +107,34 @@
     $(document).ready(function() {
         var gameIdToDelete;
 
+        // Afficher le modal pour créer un nouveau match
         $(document).on('click', '#newGameBtn', function(event) {
             event.stopPropagation();
             $('#newGameModal').modal('show');
         });
 
+        // Rediriger vers la page de jeu pour jouer un match
         $(document).on('click', '.play-game', function(event) {
             event.stopPropagation();
             var gameId = $(this).data('id');
             window.location.href = '{{ url("play") }}/' + gameId;
         });
         
+        // Rediriger vers la page de détails d'un match
         $(document).on('click', '.view-game', function(event) {
             event.stopPropagation();
             var gameId = $(this).data('id');
             window.location.href = '{{ url("game") }}/' + gameId;
         });
 
+        // Rediriger vers la page de détails d'un match en cliquant sur une ligne de tableau
         $(document).on('click', '.game-row', function(event) {
             event.stopPropagation();
             var gameId = $(this).data('id');
             window.location.href = '{{ url("game") }}/' + gameId;
         });
 
+        // Afficher le modal de confirmation de suppression d'un match
         $(document).on('click', '.delete-game', function(event) {
             event.stopPropagation();
             gameIdToDelete = $(this).data('id');
@@ -133,6 +143,7 @@
             $('#deleteModal').modal('show');
         });
 
+        // Confirmer la suppression d'un match
         $('#confirmDelete').click(function() {
             $.ajax({
                 url: '{{ url("deletegame") }}/' + gameIdToDelete,
@@ -144,6 +155,7 @@
                 success: function(response) {
                     console.log(response);
 
+                    // Supprimer la ligne du match supprimé
                     $('#game-' + gameIdToDelete).remove();
                     $('#deleteModal').modal('hide');
                     if ($('#games-table-body').children().length === 0) {
@@ -151,6 +163,7 @@
                         $('#home-container').append('<span id="no-games-message">Aucun match en stock pour le moment.</span>');
                     }
 
+                    // Afficher un message de confirmation de suppression
                     $('#home-container').prepend(
                         `<div id="alert-game-deleted" class="alert alert-danger fixed-bottom mx-4">Match ${response.game.equipe_1}/${response.game.equipe_2} supprimé !</div>`
                     );
@@ -165,11 +178,13 @@
             });
         });
 
+        // Annuler la suppression d'un match
         $('#cancelDelete').click(function() {
             gameIdToDelete = null;
             $('#deleteModal').modal('hide');
         });
 
+        // Soumettre le formulaire pour générer un nouveau match
         $('#newGameForm').submit(function(event) {
             event.preventDefault();
             var generateBtn = $('#generateBtn');
@@ -236,6 +251,7 @@
                             $('#games-table-body').append(newRow);
                         }
 
+                        // Afficher un message de confirmation de création
                         $('#home-container').prepend(
                             `<div id="alert-game-created" class="alert alert-success fixed-bottom mx-4">Nouveau match ${response.game.equipe_1}/${response.game.equipe_2} disponible !</div>`
                         );

@@ -9,6 +9,11 @@ class Categorie extends Model
 {
     use HasFactory;
 
+    /**
+     * Les attributs qui peuvent être assignés en masse.
+     *
+     * @var array<string>
+     */
     protected $fillable = [
         'nom',
         'type',

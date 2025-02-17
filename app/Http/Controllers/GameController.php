@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Http;
 
 class GameController
 {
+    /**
+     * Générer un nouveau match et ses improvisations.
+     */
     public function generateGame(Request $request) {
         try {
             $validatedData = $request->validate([
@@ -89,26 +92,29 @@ class GameController
 
             return response()->json([
                 'status' => 200,
-                'message' => 'Game and impros created successfully',
+                'message' => 'Jeu et improvisations créés avec succès',
                 'game' => $game,
             ], 200);
 
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
                 'status' => 422,
-                'message' => 'Validation error',
+                'message' => 'Erreur de validation',
                 'errors' => $e->errors(),
             ], 422);
 
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 500,
-                'message' => 'An error occurred while creating the game',
+                'message' => 'Une erreur est survenue lors de la création du jeu',
                 'error' => $e->getMessage(),
             ], 500);
         }
     }
 
+    /**
+     * Réinitialiser le vainqueur d'un match et de ses improvisations.
+     */
     public function resetGame($id) {
         try {
             $game = Game::findOrFail($id);
@@ -117,19 +123,22 @@ class GameController
 
             return response()->json([
                 'status' => 200,
-                'message' => 'Game and impros reset successfully',
+                'message' => 'Jeu et improvisations réinitialisés avec succès',
                 'game' => $game,
             ], 200);
 
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 500,
-                'message' => 'An error occurred while resetting the game',
+                'message' => 'Une erreur est survenue lors de la réinitialisation du jeu',
                 'error' => $e->getMessage(),
             ], 500);
         }
     }
 
+    /**
+     * Supprimer un match et les improvisations qui le composent.
+     */
     public function deleteGame($id) {
         try {
             $game = Game::findOrFail($id);
@@ -139,27 +148,36 @@ class GameController
 
             return response()->json([
                 'status' => 200,
-                'message' => 'Game and associated impros deleted successfully',
+                'message' => 'Jeu et improvisations associées supprimés avec succès',
                 'game' => $gameDeleted,
             ], 200);
 
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 500,
-                'message' => 'An error occurred while deleting the game',
+                'message' => 'Une erreur est survenue lors de la suppression du jeu',
                 'error' => $e->getMessage(),
             ], 500);
         }
     }
 
+    /**
+     * Obtenir tous les matchs arbitrés par un utilisateur donné.
+     */
     public function getGamesByArbitre($arbitre) {
         return Game::where('arbitre', $arbitre)->get();
     }
 
+    /**
+     * Obtenir un match spécifique par son ID et le nom de l'arbitre.
+     */
     public function getGame($gameId, $userId) {
         return Game::where('id', $gameId)->where('arbitre', $userId)->first();
     }
 
+    /**
+     * Mettre à jour le vainqueur d'un match en fonction des scores de ses improvisations.
+     */
     public function updateGameWinner($id) {
         try {
             $game = Game::findOrFail($id);
@@ -182,12 +200,15 @@ class GameController
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 500,
-                'message' => 'An error occurred while updating the game winner',
+                'message' => 'Une erreur est survenue lors de la mise à jour du vainqueur du jeu',
                 'error' => $e->getMessage(),
             ], 500);
         }
     }
 
+    /**
+     * Obtenir les résultats d'un match : équipe gagnante et scores des deux équipes.
+     */
     public function getGameResults($id) {
         $game = Game::findOrFail($id);
         $scoreTeam1 = Impro::where('game_id', $id)->where('vainqueur', $game->equipe_1)->count();

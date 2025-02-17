@@ -35,6 +35,9 @@ return [
         ],
     ],
 
+    /**
+     * Obtenir la clé API OpenAI.
+     */
     'openai' => [
         'secret' => env('OPENAI_SECRET'),
     ],

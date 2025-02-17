@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class LoginRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * Déterminer si l'utilisateur est autorisé à faire une demande de connexion.
      */
     public function authorize(): bool
     {
@@ -15,7 +15,7 @@ class LoginRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Obtenir les règles de validation qui s'appliquent à la demande de connexion.
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */

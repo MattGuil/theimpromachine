@@ -45,7 +45,3 @@
         </div>
     </div>
 </x-layout>
-
-<script type="text/javascript">
-    // No additional JavaScript needed for Bootstrap accordion
-</script>
