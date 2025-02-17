@@ -6,7 +6,7 @@
         <p class="small-paragraph">L'objectif pour les comédiens improvisateurs et comédiennes improvisatrices est de jouer ensemble en intégrant positivement chaque idée proposée par ses partenaires. Ceci par le biais de différentes règles de jeu qui sont celles du théâtre en général mais dans l'instant et, généralement, sans période de réflexion.</p>
         <p class="small-paragraph">Une ou plusieurs improvisations peuvent s'enchaîner pour créer un spectacle complet.</p>
         <h2>The Impro Machine</h2>
-        <p class="small-paragraph"><span>The Impro Machine</span> vous permet de générer des matchs d'improvisation automatiquement et facilement !</p>
+        <p class="small-paragraph"><span class="fst-italic">The Impro Machine</span> vous permet de générer des matchs d'improvisation automatiquement et facilement !</p>
         <h2 id="categories-dictionary">Dictionnaire des catégories</h2>
         <div class="accordion" id="categoriesAccordion">
             @foreach ($categories as $type => $categoriesByType)
