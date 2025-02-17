@@ -7,7 +7,7 @@
             <thead class="opacity-50">
                 <tr>
                     <th scope="col">Type</th>
-                    <th scope="col">Nombre de joueurs</th>
+                    <th scope="col">Joueurs</th>
                     <th scope="col">Durée</th>
                     <th scope="col">Catégorie</th>
                     <th scope="col">Thème</th>
@@ -17,7 +17,7 @@
                 @foreach ($impros as $impro)
                     <tr data-id="{{ $impro->id }}">
                         <td>{{ $impro->type }}</td>
-                        <td>{{ $impro->nb_joueur == -1 ? 'Illimité' : $impro->nb_joueur }}</td>
+                        <td>{{ $impro->nb_joueurs == -1 ? 'Illimité' : $impro->nb_joueurs }}</td>
                         <td>{{ $impro->duree }} min</td>
                         <td>
                             {{ $impro->categorie->nom }}

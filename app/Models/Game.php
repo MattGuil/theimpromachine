@@ -15,7 +15,6 @@ class Game extends Model
         'equipe_2',
         'equipe_1_score',
         'equipe_2_score',
-        'statut',
         'vainqueur'
     ];
 }

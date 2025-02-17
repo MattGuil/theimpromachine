@@ -23,8 +23,6 @@ class GameController
                 'arbitre' => $validatedData['arbitre'],
                 'equipe_1' => $validatedData['equipe_1'],
                 'equipe_2' => $validatedData['equipe_2'],
-                'equipe_1_score' => 0,
-                'equipe_2_score' => 0,
                 'vainqueur' => null,
             ]);
 
@@ -111,6 +109,27 @@ class GameController
         }
     }
 
+    public function resetGame($id) {
+        try {
+            $game = Game::findOrFail($id);
+            Impro::where('game_id', $id)->update(['vainqueur' => null]);
+            $game->update(['vainqueur' => null]);
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Game and impros reset successfully',
+                'game' => $game,
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 500,
+                'message' => 'An error occurred while resetting the game',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
     public function deleteGame($id) {
         try {
             $game = Game::findOrFail($id);
@@ -139,5 +158,44 @@ class GameController
 
     public function getGame($gameId, $userId) {
         return Game::where('id', $gameId)->where('arbitre', $userId)->first();
+    }
+
+    public function updateGameWinner($id) {
+        try {
+            $game = Game::findOrFail($id);
+            $scoreTeam1 = Impro::where('game_id', $id)->where('vainqueur', $game->equipe_1)->count();
+            $scoreTeam2 = Impro::where('game_id', $id)->where('vainqueur', $game->equipe_2)->count();
+
+            $winner = null;
+            if ($scoreTeam1 > $scoreTeam2) {
+                $winner = $game->equipe_1;
+            } elseif ($scoreTeam2 > $scoreTeam1) {
+                $winner = $game->equipe_2;
+            } else {
+                $winner = '=';
+            }
+
+            $game->update(['vainqueur' => $winner]);
+
+            return response()->json(['status' => 'success', 'winner' => $winner]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 500,
+                'message' => 'An error occurred while updating the game winner',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function getGameResults($id) {
+        $game = Game::findOrFail($id);
+        $scoreTeam1 = Impro::where('game_id', $id)->where('vainqueur', $game->equipe_1)->count();
+        $scoreTeam2 = Impro::where('game_id', $id)->where('vainqueur', $game->equipe_2)->count();
+        return response()->json([
+            'winner' => $game->vainqueur,
+            'score_team_1' => $scoreTeam1,
+            'score_team_2' => $scoreTeam2
+        ]);
     }
 }

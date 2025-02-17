@@ -16,9 +16,6 @@ return new class extends Migration
             $table->string('arbitre');
             $table->string('equipe_1');
             $table->string('equipe_2');
-            $table->integer('equipe_1_score')->nullable();
-            $table->integer('equipe_2_score')->nullable();
-            $table->enum('statut', ['Créé', 'En cours', 'Terminé'])->default('Créé');
             $table->string('vainqueur')->nullable();
             $table->timestamps();
         });

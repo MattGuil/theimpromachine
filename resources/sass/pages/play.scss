@@ -1,6 +1,48 @@
 #play-container {
     padding-top: 15vh;
     padding-bottom: 10vh;
+
+    #improCarousel {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+
+        .carousel-inner {
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+       .carousel-item > div {
+            position: relative;
+            box-shadow: 2px 2px 5px lightgray;
+            border: 2px solid #333;
+            width: 75%;
+            margin: auto;
+        
+            .attribut-container {
+                width: 100%;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            
+                .attribut-label {
+                    opacity: .5;
+                    display: flex;
+                    justify-content: flex-end;
+                }
+
+                .attribute-value {
+                    display: flex;
+                    justify-content: flex-start;
+                }
+            }
+        }
+    }
 }
 
 @media (max-width: 800px) {

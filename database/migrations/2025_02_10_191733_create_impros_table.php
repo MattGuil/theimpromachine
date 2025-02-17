@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('duree');
             $table->foreignId('categorie_id')->index();
             $table->string('theme');
-            $table->enum('statut', ['Créée', 'En cours', 'Jouée'])->default('Créée');
+            $table->string('vainqueur')->nullable();
             $table->timestamps();
         });
     }

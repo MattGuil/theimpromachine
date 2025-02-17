@@ -43,10 +43,10 @@
     </div>
 
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header d-flex justify-content-center">
-                    <h5 class="modal-title" id="deleteModalLabel">Sûr de vouloir supprimer ce match ?</h5>
+                    <h6 class="modal-title" id="deleteModalLabel">Sûr de vouloir supprimer ce match ?</h6>
                 </div>
                 <div class="modal-body text-center" id="match-name"></div>
                 <div class="modal-footer">
@@ -238,39 +238,4 @@
             }
         });
     });
-
-    /*
-    $('#newImproBtn').click(function() {
-        var game_id = $('#game_id').val();
-        var type = $('#type').val();
-        var nb_joueur = $('#nb_joueur').val();
-        var duree = $('#duree').val();
-        var categorie_id = $('#categorie_id').val();
-        var theme = $('#theme').val();
-        var statut = $('#statut').val();
-
-        $.ajax({
-            url: '{{ url("newimpro") }}',
-            method: 'POST',
-            data: {
-                _token: '{{ csrf_token() }}',
-                game_id: game_id,
-                type: type,
-                nb_joueur: nb_joueur,
-                duree: duree,
-                categorie_id: categorie_id,
-                theme: theme,
-                statut: statut
-            },
-            success: function(response) {
-                alert('New Impro created successfully!');
-                console.log(response);
-            },
-            error: function(xhr, status, error) {
-                alert('Error: ' + error);
-                console.log(xhr.responseText);
-            }
-        });
-    });
-    */
 </script>

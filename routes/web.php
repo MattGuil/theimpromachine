@@ -24,7 +24,12 @@ Route::get('play/{i}', [AppController::class, 'play'])->name('play')->middleware
 Route::get('help', [AppController::class, 'help'])->name('help')->middleware('auth');
 
 Route::post('generategame', [GameController::class, 'generateGame'])->middleware('auth');
+Route::post('resetgame/{id}', [GameController::class, 'resetGame'])->middleware('auth');
 Route::delete('deletegame/{id}', [GameController::class, 'deleteGame'])->middleware('auth');
+Route::post('updategamewinner/{id}', [GameController::class, 'updateGameWinner'])->middleware('auth');
+Route::get('gameresults/{id}', [GameController::class, 'getGameResults'])->middleware('auth');
 
 Route::delete('deleteimpro/{id}', [ImproController::class, 'deleteImpro'])->middleware('auth');
 Route::post('updateimprosorder', [ImproController::class, 'updateImprosOrder'])->middleware('auth');
+Route::post('updateimprowinner', [ImproController::class, 'updateImproWinner'])->middleware('auth');
+Route::get('hasimprowinner/{id}', [ImproController::class, 'hasImproWinner'])->middleware('auth');

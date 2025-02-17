@@ -13,11 +13,11 @@ class Impro extends Model
         'game_id',
         'position',
         'type',
-        'nb_joueur',
+        'nb_joueurs',
         'duree',
         'categorie_id',
         'theme',
-        'statut'
+        'vainqueur'
     ];
 
     public function categorie() {

@@ -23,6 +23,10 @@ tr .btn:hover {
     opacity: 1;
 }
 
+.btn-group {
+    color: #86ade3;
+}
+
 .btn-primary, .btn-success, .btn-info, .btn-danger {
     border: none !important;
 }
@@ -95,6 +99,7 @@ tr:hover {
     box-shadow: none !important;
 }
 
-.left-aligned-tooltip .tooltip-inner {
-    text-align: left;
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(1);
 }

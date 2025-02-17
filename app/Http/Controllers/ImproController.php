@@ -10,7 +10,7 @@ class ImproController
 {
     public function generateImpro($game_id, $position, $nb_joueurs, $nb_impros, $theme) {
         $type = (rand(1, 4) <= 3) ? 'Mixte' : 'Comparée';
-        $nb_joueur = (rand(1, 10) <= 8) ? -1 : rand(2, $nb_joueurs - 1);
+        $nb_joueurs = (rand(1, 10) <= 8) ? -1 : rand(2, $nb_joueurs - 1);
         $duree = (rand(1, 10) <= 8) ? rand(2, 7) : rand(1, 15);
         $categorie_id = (rand(1, 10) <= 8) ? 1 : Categorie::where('id', '!=', 1)->inRandomOrder()->first()->id;
 
@@ -18,11 +18,11 @@ class ImproController
             'game_id' => $game_id,
             'position' => $position,
             'type' => $type,
-            'nb_joueur' => $nb_joueur,
+            'nb_joueurs' => $nb_joueurs,
             'duree' => $duree,
             'categorie_id' => $categorie_id,
             'theme' => $theme,
-            'statut' => 'Créée'
+            'vainqueur' => null
         ]);
 
         $impro->save();
@@ -58,5 +58,19 @@ class ImproController
         }
 
         return response()->json(['status' => 'success']);
+    }
+
+    public function updateImproWinner(Request $request) {
+        $improId = $request->input('impro_id');
+        $winner = $request->input('winner');
+
+        Impro::where('id', $improId)->update(['vainqueur' => $winner]);
+
+        return response()->json(['status' => 'success']);
+    }
+
+    public function hasImproWinner($id) {
+        $impro = Impro::findOrFail($id);
+        return response()->json(['has_winner' => !is_null($impro->vainqueur)]);
     }
 }
