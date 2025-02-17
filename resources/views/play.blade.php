@@ -6,7 +6,7 @@
                     <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
                         <div class="d-flex flex-column align-items-center p-3">
                             <h3 class="mb-3">Improvisation {{ $index + 1 }}/{{ count($impros) }}</h3>
-                            <div>
+                            <div class="w-100">
                                 <div class="attribut-container">
                                     <span class="attribut-label">Type</span>
                                     <p class="attribut-value">{{ $impro->type }}</p>
@@ -27,7 +27,7 @@
                                     <span class="attribut-label">Thème</span>
                                     <p class="attribut-value">{{ $impro->theme }}</p>
                                 </div>
-                                <div class="btn-group d-flex" role="group" aria-label="Basic radio toggle button group">
+                                <div class="btn-group mt-3 w-100 equal-width-buttons" role="group" aria-label="Basic radio toggle button group">
                                     <input type="radio" class="btn-check" name="btnradio-{{ $index }}" id="btnradio-{{ $index }}-1" autocomplete="off" data-impro-id="{{ $impro->id }}" value="{{ $game->equipe_1 }}">
                                     <label class="btn btn-outline-warning" for="btnradio-{{ $index }}-1">{{ $game->equipe_1 }}</label>
                                     

@@ -41,6 +41,10 @@
                     justify-content: flex-start;
                 }
             }
+
+            .equal-width-buttons .btn {
+                flex: 1;
+            }
         }
     }
 }

@@ -11,6 +11,17 @@
     }
 }
 
+.team-name {
+    position: relative;
+}
+
+.material-symbols-outlined {
+    position: absolute;
+    top: -60%;
+    left: 25%;
+    transform: rotate(-5deg);
+}
+
 .modal-footer {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

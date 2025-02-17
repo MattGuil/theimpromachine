@@ -23,7 +23,21 @@
                         <td class="date">
                             <span>{{ $game->created_at->format('d/m/Y') }}</span>
                         </td>
-                        <td>{{ $game->equipe_1 }} / {{ $game->equipe_2 }}</td>
+                        <td>
+                            <span class="team-name">
+                                {{ $game->equipe_1 }}
+                                @if ($game->vainqueur == $game->equipe_1)
+                                    <span class="material-symbols-outlined text-warning">crown</span>
+                                @endif
+                            </span>
+                            /
+                            <span class="team-name">
+                                {{ $game->equipe_2 }}
+                                @if ($game->vainqueur == $game->equipe_2)
+                                    <span class="material-symbols-outlined text-warning">crown</span>
+                                @endif
+                            </span>
+                        </td>
                         <td class="text-end">
                             <button class="btn btn-success btn-sm play-game" data-id="{{ $game->id }}">
                                 <i class="material-icons">play_arrow</i>
@@ -182,7 +196,13 @@
                                 <td class="date">
                                     <span>${new Date(response.game.created_at).toLocaleDateString()}</span>
                                 </td>
-                                <td>${response.game.equipe_1} / ${response.game.equipe_2}</td>
+                                <td>
+                                    <span>${response.game.equipe_1}</span>
+                                    ${response.game.vainqueur == response.game.equipe_1 ? '<span class="material-symbols-outlined text-warning">crown</span>' : ''}
+                                    / 
+                                    <span>${response.game.equipe_2}</span>
+                                    ${response.game.vainqueur == response.game.equipe_2 ? '<span class="material-symbols-outlined text-warning">crown</span>' : ''}
+                                </td>
                                 <td class="text-end">
                                     <button class="btn btn-success btn-sm play-game" data-id="${response.game.id}">
                                         <i class="material-icons">play_arrow</i>
